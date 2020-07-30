@@ -17,7 +17,12 @@ class SenderSocket {
   // TODO: add destructor to clear the socket
   // close(fd);
 
-  void SendPacket(const std::vector<unsigned char> &data) const;
+  // void SendPacket(const std::vector<unsigned char> &data) const;
+
+  void SendPacket(
+    const std::vector<unsigned char> &data,
+    const int package_len,
+    const int package_num) const;
 
  private:
     // The socket identifier (handle).

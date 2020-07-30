@@ -29,11 +29,15 @@ int main(int argc, char** argv) {
   const SenderSocket socket(ip_address, port);
   std::cout << "Sending to " << ip_address
             << " on port " << port << "." << std::endl;
-  VideoCapture video_capture(false, 0.25);
-  BasicProtocolData protocol_data;
+  VideoCapture video_capture(false, 1, 30, 640, 480);
+  BasicProtocolData protocol_data(false, 1200, video_capture.GetHeight()*video_capture.GetWidth()*video_capture.GetChannel());
+
+  std::cout << "pack len is: " << protocol_data.GetPackageLen() << std::endl;
+  std::cout << "pack num is: " << protocol_data.GetPackageNum() << std::endl;
+
   while (true) {  // TODO: break out cleanly when done.
     protocol_data.SetImage(video_capture.GetFrameFromCamera());
-    socket.SendPacket(protocol_data.PackageData());
+    socket.SendPacket(protocol_data.PackageData(), protocol_data.GetPackageLen(), protocol_data.GetPackageNum());
   }
   return 0;
 }

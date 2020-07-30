@@ -13,6 +13,13 @@ namespace udp_streaming_video {
 
 class BasicProtocolData : public ProtocolData {
  public:
+
+  // BasicProtocolData(const bool picture_compress_flag) {
+  //   picture_compress_flag_ = picture_compress_flag;
+  // }
+
+  BasicProtocolData(const bool picture_compress_flag, const int package_len, const int picture_size);
+
   std::vector<unsigned char> PackageData() const override;
 
   void UnpackData(
@@ -28,9 +35,24 @@ class BasicProtocolData : public ProtocolData {
     return video_frame_;
   }
 
+  bool GetCompressFlag() const {
+    return picture_compress_flag_;
+  }
+
+  int GetPackageLen() const {
+    return package_len_;
+  }
+
+  int GetPackageNum() const {
+    return package_num_;
+  }
+
  private:
   // The video frame received from the packet is stored here.
   VideoFrame video_frame_;
+  bool picture_compress_flag_;
+  int package_len_;
+  int package_num_;
 };
 
 }  // namespace udp_streaming_video

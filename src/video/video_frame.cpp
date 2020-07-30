@@ -5,6 +5,7 @@
 
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgcodecs/legacy/constants_c.h"
 
 namespace udp_streaming_video {
 namespace {
@@ -25,7 +26,10 @@ constexpr int kJPEGQuality = 25;
 }  // namespace
 
 VideoFrame::VideoFrame(const std::vector<unsigned char> frame_bytes) {
-  frame_image_ = cv::imdecode(frame_bytes, cv::IMREAD_COLOR);
+  cv::Mat img(cv::Size(640, 480), 16, (void*)frame_bytes.data());
+  frame_image_ = img;
+  // frame_image_ = cv::imdecode(img, CV_LOAD_IMAGE_COLOR);
+  // frame_image_ = cv::imdecode(frame_bytes, cv::LOAD_IMAGE_COLOR);
 }
 
 void VideoFrame::Display() const {
@@ -45,6 +49,16 @@ std::vector<unsigned char> VideoFrame::GetJPEG() const {
   std::vector<unsigned char> data_buffer;
   cv::imencode(kJPEGExtension, frame_image_, data_buffer, compression_params);
   return data_buffer;
+}
+
+std::vector<unsigned char> VideoFrame::GetRaw() const {
+  const unsigned char* p = (const unsigned char*)frame_image_.data;
+  std::vector<unsigned char> array(p, p+frame_image_.cols*frame_image_.rows*frame_image_.channels());
+  return array;
+}
+
+int VideoFrame::GetMatSize() const {
+  return frame_image_.rows*frame_image_.cols;
 }
 
 }  // namespace udp_streaming_video

@@ -23,9 +23,9 @@ int main(int argc, char** argv) {
     return -1;
   }
   std::cout << "Listening on port " << port << "." << std::endl;
-  BasicProtocolData protocol_data;
+  BasicProtocolData protocol_data(false, 1200, 640*480*3);
   while (true) {  // TODO: break out cleanly when done.
-    protocol_data.UnpackData(socket.GetPacket());
+    protocol_data.UnpackData(socket.GetPacket(protocol_data.GetPackageLen(), protocol_data.GetPackageNum()));
     protocol_data.GetImage().Display();
   }
   return 0;

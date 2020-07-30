@@ -29,18 +29,32 @@ class ReceiverSocket {
 
   // Waits for the next packet on the given port, and returns vector of bytes
   // (stored as unsigned chars) that contains the raw packet data.
-  const std::vector<unsigned char> GetPacket() const;
+  const std::vector<unsigned char> GetPacket(
+    const int package_len,
+    const int package_num) const;
 
  private:
   // This buffer will be used to collect incoming packet data. It is only used
   // in the GetPacket() method.
-  char buffer_[kMaxPacketBufferSize];
+  unsigned char buffer_[kMaxPacketBufferSize];
 
   // The port number that the socket will listen for packets on.
   const int port_;
 
   // The socket identifier (handle).
   int socket_handle_;
+
+  mutable std::vector<unsigned char> data_buf;
+
+  bool start_image_flag;
+
+  void SetStartImageFlag() {
+    start_image_flag = 1;
+  }
+  void ClearStartImageFlag() {
+    start_image_flag = 0;
+  }
+
 };  // ReceiverSocket
 
 }  // namespace udp_streaming_video

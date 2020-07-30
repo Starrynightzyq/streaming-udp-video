@@ -22,7 +22,11 @@ class VideoCapture {
   //
   // Specify whether or not the video being sent is displayed in a window, and
   // the scale = (0, 1] which will affect the size of the data.
-  VideoCapture(const bool show_video, const float scale);
+  VideoCapture(const bool show_video, 
+    const float scale, 
+    const int fps, 
+    const int width, 
+    const int height);
 
   // Captures and returns a frame from the available video camera.
   //
@@ -32,6 +36,11 @@ class VideoCapture {
   // modified through a non-const method when getting a new frame from the
   // camera.
   VideoFrame GetFrameFromCamera();
+
+  int GetFps() const;
+  int GetWidth() const;
+  int GetHeight() const;
+  int GetChannel() const;
 
  private:
   // The OpenCV camera capture object. This is used to interface with a
@@ -44,6 +53,10 @@ class VideoCapture {
 
   // Set to true to show the video.
   const bool show_video_;
+
+  const int fps_;
+  const int width_;
+  const int height_;
 };
 
 }  // namespace udp_streaming_video

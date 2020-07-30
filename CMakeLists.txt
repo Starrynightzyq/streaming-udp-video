@@ -18,6 +18,7 @@ IF(NOT ${CMAKE_BUILD_TYPE} MATCHES Debug)
   MESSAGE("Build type: Release.")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 -Ofast")
 ELSE()
+  ADD_DEFINITIONS(-DDEBUG)
   MESSAGE("WARNING: Building in DEBUG MODE! Use 'cmake -DCMAKE_BUILD_TYPE=Release' for faster runtime.")
 ENDIF()
 

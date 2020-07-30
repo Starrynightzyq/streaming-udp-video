@@ -30,6 +30,12 @@ class VideoFrame {
   // compression to JPEG is also handled here to minimize the frame size.
   std::vector<unsigned char> GetJPEG() const;
 
+  // Return RAW picture data.
+  std::vector<unsigned char> GetRaw() const;
+
+  // Return picture size. (lenght * width)
+  int GetMatSize() const;
+
  private:
   cv::Mat frame_image_;
 };
