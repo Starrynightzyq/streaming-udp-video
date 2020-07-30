@@ -4,14 +4,14 @@ This is a simple video streaming application. The sender captures video frames f
 
 Requires OpenCV 2. Works on OS X and Linux.
 
+# What's new
+
+In order to verify some image algorithms more conveniently, I need to realize the original image transmission through the network on the platform of FPGA. In order to obtain the uncompressed image, the original image transmission mode is added. The data-rate of 640 * 480 * 24bit image is about 26MBps. Test on [PYNQ-Z2](https://pynq.io/) is passed.
+
 TODO
 ------
 
-<ul>
-  <li> Test the build on Linux. </li>
-  <li> UDP packets that are too large won't be delivered. Split up frame packets that exceed a certain size limit. </li>
-  <li> There is currently no security, and anyone can send a packet to the receiver, whether it's a video frame or not. Implement a protocol that adds some security and ensures the incoming data is valid. Possibly encrypt the video. </li>
-  <li> Test sending video across a large physical distance over the Internet. </li>
-  <li> Define a clean API so the UDP video streaming can be plugged in to other applications. </li>
-  <li> Add support from Windows (it uses a different socket library). </li>
-</ul>
+- [x] Test the build on Linux.
+- [x] UDP packets that are too large won't be delivered. Split up frame packets that exceed a certain size limit.
+- [x] Test the build on Linux for ARM 32 bit.
+- [ ] There is currently no security, and anyone can send a packet to the receiver, whether it's a video frame or not. Implement a protocol that adds some security and ensures the incoming data is valid. Possibly encrypt the video.
